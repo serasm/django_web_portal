@@ -1,0 +1,12 @@
+{% extends 'information_page/base.html' %}
+{% load bootstrap4 %}
+
+
+{% block info_content %}
+
+    <form method="POST">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"</p>
+        <input type="submit" name="Confirm">
+    </form>
+
+{% endblock info_content %}

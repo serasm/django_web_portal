@@ -1,0 +1,21 @@
+{% extends 'information_page/base.html' %}
+{% load bootstrap4 %}
+
+
+{% block info_content %}
+
+    <h1>Author {{ view.kwargs.username }}</h1>
+
+    {% for article in myarticles %}
+
+        <div class="card">
+            <h2>{{ article }}</h2>
+            <p>{{ article.text }}</p>
+        </div>
+
+    {% endfor %}
+    
+
+    {% include 'information_page/snippets/pagination.html' with username_snippet=view.kwargs.username page_obj_snippet=page_obj url_name_snippet='informations:author-articles' %}
+
+{% endblock info_content %}

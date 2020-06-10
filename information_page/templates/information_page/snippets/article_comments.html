@@ -1,0 +1,49 @@
+{% load bootstrap4 %}
+{% load permissions_extras %}
+
+{% if comments %}
+    <div class="container mt-5">
+        <div>
+            <h4>Comments:</h4>
+        </div>
+
+        <div class="container">
+            {% for comment in comments %}
+                <div class="container border-bottom mb-2 mt-2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-9">
+                                <a href="{% url 'accounts:profile-details' pk=comment.author.pk %}">{{ comment.author }}</a>
+                            </div>
+                            <div class="col">
+                                <time>{{ comment.creation_date }}</time>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {{ comment }}
+                        </div>
+                        {% has_permission user=user obj=comment perm='information_page.delete_articlecomment' as can_delete %}
+                        {% if can_delete %}
+                            <div class="row">
+                                <div class="col">
+                                    <div class="float-right">
+                                        {% if comment.author == user %}
+                                            <a class="btn btn-primary" href="{% url 'informations:comment-update' pk=comment.pk %}">Update</a>
+                                        {% endif %}
+                                        <a class="btn btn-danger" href="{% url 'informations:comment-remove' pk=comment.pk %}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endif %}
+
+<form action="{% url 'informations:comment-create' slug=article_slug %}" method="post">{% csrf_token %}
+    {% bootstrap_form comment_form %}
+    <input type="submit" value="Save" class="btn btn-primary">
+</form>

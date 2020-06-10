@@ -1,0 +1,28 @@
+{% extends 'information_page/base.html' %}
+
+{% block info_content %}
+
+    {% for key, values in categories.items %}
+        <div class="fluid-container">
+            <div class="jumbotron jumbotron-fluid">
+                <h1 class="display-4"><a href="{% url 'informations:article-list' category=key %}">{{ key }}</a></h1>
+            </div>
+            <div class="row row-cols-3">
+                {% for value in values %}
+                    <div class="col mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{% url 'informations:article-details' slug=value.slug %}">{{ value }}</a></h5>
+                                <p class="card-text">{{ value.text|truncatechars:50 }}</p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Publication: {{ value.publication_date|date:"l F Y" }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock info_content %}

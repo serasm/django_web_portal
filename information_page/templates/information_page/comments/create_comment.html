@@ -1,0 +1,17 @@
+{% extends 'information_page/base.html' %}
+{% load bootstrap4 %}
+
+
+{% block info_content %}
+
+    <form method="POST">{% csrf_token %}
+        {% bootstrap_form form %}
+
+        <div class="container">
+            <a href="{% url 'informations:index' %}">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+    
+
+{% endblock info_content %}

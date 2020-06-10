@@ -1,0 +1,32 @@
+{% extends 'information_page/base.html' %}
+{% load bootstrap4 %}
+
+
+{% block info_content %}
+
+    {% for genre in object_list %}
+        <div class="card">
+            <div class="container">
+                <h1>{{ genre }}</h1>
+                <p>
+                    {% for genre_name in genre.get_ancestors %}
+                        {{ genre_name }}/
+                    {% endfor %}
+                </p>
+                <p>{{ genre.description }}</p>
+                {% if user.is_staff %}
+                <form action="#">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </form>
+                <form action="#">
+                    <input type="submit" class="btn btn-info" value="Details">
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    {% include 'information_page/snippets/pagination.html' with page_obj_snippet=page_obj url_name_snippet='informations:genre-list' %}
+    
+
+{% endblock info_content %}

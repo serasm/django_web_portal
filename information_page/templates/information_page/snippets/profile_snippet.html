@@ -1,0 +1,11 @@
+<div class="col mb-4">
+    <div class="card border-info">
+        <div class="card-header text-center">
+            Your Profile
+        </div>
+        <div class="card-body">
+            <h2 class="cart-title"><a href="{% url 'accounts:profile-details' pk=user.pk %}">{{ user_info.username }}</a></h2>
+            <a href="{% url 'informations:user-comments' username=user.username %}" class="cart-link">Your Comments</a>
+        </div>
+    </div>
+</div>

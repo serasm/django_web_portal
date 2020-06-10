@@ -1,0 +1,24 @@
+{% extends 'information_page/base.html' %}
+{% load bootstrap4 %}
+
+
+{% block info_content %}
+
+    {% for note in object_list %}
+        <div class="card">
+            <div class="container">
+                <h1><a href="{% url 'informations:article-details' slug=note.article.slug %}">{{ note.article }}</a></h1>
+                <p>
+                    {{ note }}
+                </p>
+                {% if user.is_staff %}
+                    <a href="{% url 'informations:note-remove' pk=note.pk %}" class="btn btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    {% include 'information_page/snippets/pagination.html' with page_obj_snippet=page_obj url_name_snippet='informations:user-notes' username_snippet=view.kwargs.username %}
+    
+
+{% endblock info_content %}

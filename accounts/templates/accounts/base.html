@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="container bootstrap snippet">
+    <div class="row">
+        <div class="col-sm-10"><h1>{{ object }}</h1></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3"><!--left col-->
+          
+            <ul class="list-group">
+                <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong><a href="{% url 'informations:user-comments' username=object.username %}">Comments</a></strong></span> {{ object.articlecomment_set.count }}</li>
+                {% if object.is_staff %}
+                    <li class="list-group-item text-right"><span class="pull-left"><strong><a href="{% url 'informations:author-articles' username=object.username %}">Articles</a></strong></span> {{ published_articles }}</li>
+                    {% if object == user %}
+                    <li class="list-group-item text-right"><span class="pull-left"><strong><a href="{% url 'informations:user-notes' username=object.username %}">Notes</a></strong></span> {{ object.articlenote_set.count }}</li>
+                    {% endif %}
+                {% endif %}
+            </ul> 
+        </div><!--/col-3-->
+        {% block profile %}
+        {% endblock profile %}
+    </div>
+</div>
+
+{% endblock content %}

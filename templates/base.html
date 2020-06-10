@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <title>Main Page</title>
+
+        {# Bootstrap #}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+        {# Google Fonts #}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+        {% block styles %}{% endblock styles %}
+
+    </head>
+    <body>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'informations:index' %}">Site</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0" >
+                <li class="nav-item" >
+                    <a class="nav-link" href="#">Github</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'informations:about' %}">About</a>
+                </li>
+                {% block navigation %}
+                {% endblock navigation %}
+            </ul>
+            
+            {% if not user.is_authenticated %}
+                <form class="form-inline" action="{% url 'accounts:login' %}">{% csrf_token %}
+                    <button class="btn btn-outline-primary" type="submit" style="color: white;">
+                        Log In
+                    </button>
+                </form>
+            {% else %}
+                <form class="form-inline" action="{% url 'accounts:logout' %}">{% csrf_token %}
+                    <button class="btn btn-outline-light" type="submit" style="color: white;">
+                        Logout
+                    </button>
+                </form>
+            {% endif %}
+        </nav>
+        <div class="container-fluid" style="padding: 1em 4em 0 4em;">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </body>
+    {# jQuery #}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+</html>

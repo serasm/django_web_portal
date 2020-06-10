@@ -1,0 +1,49 @@
+{% load bootstrap4 %}
+{% load permissions_extras %}
+
+{% if notes %}
+    <div class="container mt-5">
+        <div>
+            <h4>Notes:</h4>
+        </div>
+
+        <div class="container">
+            {% for note in notes %}
+                <div class="container border-bottom mb-2 mt-2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-9">
+                                <a href="{% url 'accounts:profile-details' pk=note.author.id %}">{{ note.author }}</a>
+                            </div>
+                            <div class="col">
+                                <time>{{ note.creation_date }}</time>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {{ note }}
+                        </div>
+                        {% has_permission user=user obj=note perm='information_page.delete_articlenote' as can_delete %}
+                        {% if can_delete %}
+                            <div class="row">
+                                <div class="col">
+                                    <div class="float-right">
+                                        {% if note.author == user %}
+                                            <a class="btn btn-primary" href="{% url 'informations:note-update' pk=note.pk %}">Update</a>
+                                        {% endif %}
+                                        <a class="btn btn-danger" href="{% url 'informations:note-remove' pk=note.pk %}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endif %}
+
+<form action="{% url 'informations:create-note' slug=article_slug %}" method="post">{% csrf_token %}
+    {% bootstrap_form note_form %}
+    <input type="submit" value="Save" class="btn btn-primary">
+</form>

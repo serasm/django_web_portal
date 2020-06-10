@@ -1,0 +1,13 @@
+<div class="col mb-4">
+    <div class="card border-info">
+        <div class="card-header text-center">
+            Articles
+        </div>
+        <div class="card-body">
+            <p class="card-text">Here are all options for Articles</p>
+            <p><a href="{% url 'informations:article-create' %}">Create Article</a></p>
+            <p><a href="{% url 'informations:author-articles' username=user.username %}">Your Articles</a></p>
+            <p><a href="{% url 'informations:article-drafts' %}">Articles in Draft</a></p>
+        </div>
+    </div>
+</div>

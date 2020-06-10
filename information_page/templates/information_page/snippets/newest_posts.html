@@ -1,0 +1,16 @@
+{% for post in posts%}
+    <div class="col mb-4">
+        <div class="card border-info">
+            <div class="card-header">
+                {{ post.genre }}
+            </div>
+            <div class="card-body">
+                <h2 class="cart-title"><a href="{% url 'informations:article-details' slug=post.slug %}">{{ post|truncatechars:22 }}</a></h2>
+                <p class="card-text">{{ post.text|truncatechars:50 }}</p>
+            </div>
+            <div class="card-footer text-muted">
+                Publicated: {{ post.publication_date|date:"l F Y" }}
+            </div>
+        </div>
+    </div>
+{% endfor %}

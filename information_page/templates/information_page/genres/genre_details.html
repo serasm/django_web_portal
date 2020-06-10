@@ -1,0 +1,22 @@
+{% extends 'information_page/base.html' %}
+
+{% block info_content %}
+
+
+<h1>{{ object }}</h1>
+<p>{{ object.description }}</p>
+ <div class="container">
+    <h1>{{ genre }}</h1>
+    <p>
+
+        {% for genre_name in object.get_ancestors %}
+            <a href="{% url 'informations:genre-details' slug=genre_name.slug %}">{{ genre_name }}</a> /
+        {% endfor %}
+        {{ object }}
+        {% for genre_name in object.get_family %}
+            <a href="{% url 'informations:genre-details' slug=genre_name.slug %}">{{ genre_name }}</a> /
+        {% endfor %}
+    </p>
+</div>
+
+{% endblock info_content %}

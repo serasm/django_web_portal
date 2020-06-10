@@ -1,0 +1,26 @@
+{% extends 'accounts/base.html' %}
+{% load bootstrap4 %}
+
+
+{% block profile %}
+{% bootstrap_javascript jquery='full' %}
+{{ profile_form.media }}
+    <div class="col-sm-9">
+        {% if user == profile %}
+            <div class="container text-right">
+                <a href="{% url 'accounts:profile-update' pk=profile.pk %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'accounts:password_reset' %}" class="btn btn-warning">Reset Password</a>
+                <a href="{% url 'accounts:profile-remove' pk=profile.pk %}" class="btn btn-danger">Delete Account</a>
+            </div>
+        {% endif %}
+        <div class="container">
+            <p>Registered: {{ profile.date_joined }}</p>
+            <p>First name: {{ profile.first_name }}</p>
+            <p>Last name: {{ profile.last_name }}</p>
+            <p>Email address: {{ profile.mail }}</p>
+            <p>Gender: {{ profile.profile.get_gender_display }}</p>
+            <p>Birth: {{ profile.profile.birth_date }}</p>
+            <p>Age: {{ profile.profile.age }}</p>
+        </div>
+    </div><!--/col-9-->
+{% endblock profile %}

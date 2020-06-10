@@ -1,0 +1,30 @@
+{% extends 'information_page/base.html' %}
+{% load bootstrap4 %}
+{% load permissions_extras %}
+
+{% block info_content %}
+
+    {% if not article.published %}
+        <p>This article has not been published yet</p>
+        <p>Publish can only other editor</p>
+        {% has_permission user=user obj=article perm='information_page.can_publish' as can_publish %}
+        {% if can_publish %}
+            <a href="{% url 'informations:article-publish' slug=article.slug %}" class="btn btn-primary">Publish</a>
+        {% endif %}
+    {% endif %}
+
+    <p><a href="{% url 'accounts:profile-details' pk=article.author.pk %}">{{ article.author }}</a></p>
+    <h1>{{ article }}</h1>
+    <p>{{ article.text }}</p>
+
+    {% if not article.published %}
+        <!-- Snippet -->
+        {% include 'information_page/snippets/article_notes.html' with notes=article.articlenote_set.all note_form=note_form article_slug=article.slug %}
+    {% endif %}
+
+    {% if article.published %}
+        <!-- Snippet -->
+        {% include 'information_page/snippets/article_comments.html' with comments=article.comments.all comment_form=comment_form article_slug=article.slug %}
+    {% endif %}
+
+{% endblock info_content %}

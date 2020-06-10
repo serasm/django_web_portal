@@ -1,0 +1,33 @@
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj_snippet.has_previous %}
+            {% if category_name_snippet %}
+                <a href="{% url url_name_snippet category=category_name_snippet page=1 %}">First</a>
+                <a href="{% url url_name_snippet category=category_name_snippet page=page_obj_snippet.previous_page_number %}">Previous</a>
+            {% elif username_snippet %}
+                <a href="{% url url_name_snippet username=username_snippet page=1 %}">First</a>
+                <a href="{% url url_name_snippet username=username_snippet page=page_obj_snippet.previous_page_number %}">Previous</a>
+            {% else %}
+                <a href="{% url url_name_snippet page=1 %}">First</a>
+                <a href="{% url url_name_snippet page=page_obj_snippet.previous_page_number %}">Previous</a>
+            {% endif %}
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj_snippet.has_next %}
+            {% if category_name_snippet %}
+                <a href="{% url url_name_snippet category=category_name_snippet page=page_obj_snippet.next_page_number %}">Next</a>
+                <a href="{% url url_name_snippet category=category_name_snippet page=page_obj_snippet.paginator.num_pages %}">Last</a>
+            {% elif username_snippet %}
+                <a href="{% url url_name_snippet username=username_snippet page=page_obj_snippet.next_page_number %}">Next</a>
+                <a href="{% url url_name_snippet username=username_snippet page=page_obj_snippet.paginator.num_pages %}">Last</a>
+            {% else %}
+                <a href="{% url url_name_snippet page=page_obj_snippet.next_page_number %}">Next</a>
+                <a href="{% url url_name_snippet page=page_obj_snippet.paginator.num_pages %}">Last</a>
+            {% endif %}
+        {% endif %}
+    </span>
+</div>

@@ -1,0 +1,12 @@
+{% extends 'information_page/base.html' %}
+
+
+{% block info_content %}
+    {% if comments %}
+        {% for comment in comments %}
+            <p>{{ comment }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% include 'information_page/snippets/pagination.html' with page_obj_snippet=page_obj username_snippet=view.kwargs.username url_name_snippet='informations:user-comments' %}
+{% endblock info_content %}

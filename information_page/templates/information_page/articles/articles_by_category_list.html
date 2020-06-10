@@ -1,0 +1,38 @@
+{% extends 'information_page/base.html' %}
+
+{% block info_content %}
+    <div class="contaier container-fluid">
+        <div class="contaier border-bottom">
+            <h1>{{ view.kwargs.category }}</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    {% for genre in category.get_family %}
+                        {% if genre.name != category.name %}
+                            <li class="breadcrumb-item"><a href="{% url 'informations:article-list' category=genre.slug %}">{{ genre.name }}</a></li>
+                        {% else %}
+                            <li class="breadcrumb-item active">{{ genre.name }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="container">
+        {% for article in articles %}
+            <div class="contaier container-fluid border-bottom">
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <h2><a href="{% url 'informations:article-details' slug=article.slug %}">{{ article }}</a></h2>
+                        <p>{{ article.text }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    {% include 'information_page/snippets/pagination.html' with category_name_snippet=view.kwargs.category page_obj_snippet=page_obj url_name_snippet='informations:article-list' %}
+
+
+{% endblock info_content %}

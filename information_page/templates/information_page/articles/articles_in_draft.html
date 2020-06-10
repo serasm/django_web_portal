@@ -1,0 +1,40 @@
+{% extends 'information_page/base.html' %}
+{% load bootstrap4 %}
+
+
+{% block info_content %}
+    <h1>Draft</h1>
+    
+
+    {% for article in drafts %}
+
+        <div class="contaier container-fluid border-bottom">
+            <div class="row row-cols-1">
+                <div class="row row-cols-2">
+                    <div class="col-10">
+                        <h2><a href="{% url 'informations:article-details' slug=article.slug %}">{{ article }}</a></h2>
+                        <p>{{ article.text }}</p>
+                    </div>
+                    <div class="col-2">
+                        {% if article.author == user %}
+                            <p>You are an author</p>
+                        {% else %}
+                            <p>Author: {{ article.author }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container text-right">
+                        <input type="submit" value="Details">
+                        <input type="submit" value="Publish">
+                        <input type="submit" value="Remove">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+    {% include 'information_page/snippets/pagination.html' with page_obj_snippet=page_obj url_name_snippet='informations:article-drafts' %}
+
+{% endblock info_content %}

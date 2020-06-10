@@ -1,0 +1,20 @@
+{% extends 'information_page/base.html' %}
+
+{% block info_content %}
+    <div class="container">
+        {% for article in articles %}
+            <div class="contaier container-fluid border-bottom">
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <h2><a href="{% url 'informations:article-details' slug=article.slug %}">{{ article }}</a></h2>
+                        <p>{{ article.text }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    {% include 'information_page/snippets/pagination.html' with page_obj_snippet=page_obj url_name_snippet='informations:all-articles' %}
+
+
+{% endblock info_content %}

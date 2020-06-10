@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load permissions_extras %}
+
+{% block navigation %}
+    <li class="nav-item" >
+        <a class="nav-link" href="{% url 'informations:all-articles' %}">Articles</a>
+    </li>
+
+    <li class="nav-item" >
+        <a class="nav-link" href="{% url 'informations:genre-list' %}">Categories</a>
+    </li>
+{% endblock navigation %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-2">
+        <div class="row row-cols-1 border-right">
+            {% if newest_posts %}
+                <h3 class="pb-4 mb-4 font-italic border-bottom text-center">Newest Articles</h3>
+                {% include 'information_page/snippets/newest_posts.html' with posts=newest_posts %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-8" >{% block info_content %}{% endblock info_content %}</div>
+    <div class="col-2 border-left" >
+        <div class="row row-cols-1">
+            {# Profile #}
+            {% if user.is_authenticated %}
+                {% include 'information_page/snippets/profile_snippet.html' with user_info=user %}
+            {% endif %}
+
+            {% has_permission user=user perm='information_page.add_articlegenre' as can_add_genre %}
+            {% if can_add_genre %}
+                {% include 'information_page/snippets/genre_options.html' %}
+            {% endif %}
+
+            {% has_permission user=user perm='information_page.add_article' as can_add_article %}
+            {% if can_add_article %}
+                {% include 'information_page/snippets/atricle_options.html' %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
