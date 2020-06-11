@@ -40,30 +40,3 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('accounts:profile-details',
                        kwargs={'slug': self.slug})
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-        if instance.is_authenticated:
-            assign_perm(
-                'change_user',
-                instance,
-                instance)
-            assign_perm(
-                'delete_user',
-                instance,
-                instance)
-
-
-@receiver(pre_delete, sender=Profile)
-def remove_user(sender, instance, created, **kwargs):
-    if instance.user:
-        instance.user.delete()
-
-
-@receiver(pre_save, sender=Profile)
-def pre_save_profile(sender, instance, **kwargs):
-    instance.age = relativedelta(datetime.now(), instance.birth_date).years
