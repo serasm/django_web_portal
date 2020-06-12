@@ -1,13 +1,9 @@
 from django import template
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save, pre_delete, pre_save
-from django.dispatch import receiver
 from django.urls import reverse
 
-from guardian.shortcuts import assign_perm
-from dateutil.relativedelta import relativedelta
-from datetime import datetime
+
 
 register = template.Library()
 

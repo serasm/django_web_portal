@@ -1,18 +1,14 @@
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import pre_save, post_save
-from django.dispatch import receiver
 from django.urls import reverse
 
-from guardian.shortcuts import assign_perm
 
 from tools.models import (
     Comment,
     Entry,
     Genre
 )
-from tools.utils import unique_slug_generator
 
 
 # Create your models here.
